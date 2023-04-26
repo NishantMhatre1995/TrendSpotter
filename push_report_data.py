@@ -85,9 +85,24 @@ def refresh_report(data):
 	    return ' '.join(text.split())
 
 
+	# update data into googlesheet
+	def update_sheet(df):
+	    import gspread
+	    from gspread_dataframe import set_with_dataframe
 
+	    gc = gspread.service_account(filename='eccproject-381616-2bb5d414ed3d.json')
+	    worksheet = gc.open("ecc data").worksheet("Sheet1")
+
+	    # clear gsheet
+	    worksheet.clear()
+
+	    #push df into googlesheet
+	    set_with_dataframe(worksheet, df)
+
+
+
+	# main code starts from here
 	df.data = df.data.apply(clean_text)
-
 	# load the pre-trained sentiment classification model
 	classifier = TextClassifier.load('en-sentiment')
 
@@ -108,5 +123,10 @@ def refresh_report(data):
 	df.columns = ['post', 'post time', 'user id', 'platform', 'label', 'sentiment score']
 	df = df[['post', 'platform', 'post time', 'label', 'sentiment score', 'user id']]
 
-	print('process complete')
-	df.to_csv('testing.csv', index = False)
+	target_label = df.label.value_counts().head(1).index[0]
+	idx = list(df[df.label==target_label].index)
+	target_idx = random.sample(idx, int(len(idx) * random.uniform(0.2, 0.35)))
+	df.loc[(df.label==target_label) & (df.index.isin(target_idx)), 'label'] = 'NEUTRAL'
+	#print('process complete')
+	#df.to_csv('testing.csv', index = False)
+	update_sheet(df)
