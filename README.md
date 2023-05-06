@@ -1,1 +1,5 @@
-# TrendSpotter
+# TrendSpotter : Real-time search across various social media platforms
+
+A social media search engine provides users with a consolidated view of all related social media posts from various platforms such as Twitter, Reddit, and Youtube, as well as the general sentiment toward the searched keyword among users of the aforementioned social media platforms. 
+The platform will use Hadoop hosted in the cloud to handle computation for fetching data, extracting data, and performing analytics on the data. The cloud computing social media search engine project aims to provide a solution for users who have to search multiple social media platforms to get relevant data. The platform extracts data from selected social media APIs based on user keywords and presents the results in a single, user-friendly interface. 
+The project aims to save users time and effort by eliminating the need to manually search each platform individually, and provide tools and functionalities to analyze and extract insights from the data. Overall, the project provides a comprehensive solution to the problem of searching multiple social media platforms for relevant data.
